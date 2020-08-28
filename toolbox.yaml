@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: toolbox
+  name: toolbox
+  namespace: default
+spec:
+  containers:
+  - args:
+    - "1000000000"
+    command:
+    - sleep
+    image: debian:latest
+    imagePullPolicy: IfNotPresent
+    name: toolbox
+    volumeMounts:
+    - mountPath: /rootfs
+      name: rootfs
+      readOnly: false
+  dnsPolicy: ClusterFirstWithHostNet
+  enableServiceLinks: true
+  hostNetwork: true
+  hostPID: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /
+      type: Directory
+    name: rootfs
